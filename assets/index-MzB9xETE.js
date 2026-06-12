@@ -12417,14 +12417,26 @@ const Qd = (f) =>
     lg: { width: 150, height: 46 },
   };
 function xl({ size: f = "md", light: m = !1 }) {
-  const { width: S, height: o } = J1?.[f] ?? { width: 150, height: 49 };
-const logoSrc = "data:image/svg+xml,%3Csvg xmlns='https://i.ibb.co/0RFX9gXq/1000223845-removebg-preview.png' width='150' height='46'%3E%3Crect width='150' height='46'";  return u.jsx("img", {
+  // Define or use existing J1 size mapping
+  const sizeMap = {
+    sm: { width: 100, height: 30 },
+    md: { width: 150, height: 46 },
+    lg: { width: 200, height: 60 },
+  };
+  const { width, height } = (J1?.[f]) || sizeMap[f] || sizeMap.md;
+  
+  const logoSrc = "https://i.ibb.co/0RFX9gXq/1000223845-removebg-preview.png";
+
+  return u.jsx("img", {
     src: logoSrc,
-    width: S,
-    height: o,
+    width: width,
+    height: height,
     alt: "meeesho logo",
-    style: { display: "inline-block", verticalAlign: "middle" },
-    onError: (e) => { e.target.onerror = null; e.target.src = "fallback-logo.png"; }
+    style: { 
+      display: "inline-block", 
+      verticalAlign: "middle",
+      objectFit: "contain"
+    }
   });
 }
 function W1({ cartCount: f, onCartOpen: m }) {
