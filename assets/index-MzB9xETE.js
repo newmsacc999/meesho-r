@@ -12417,19 +12417,15 @@ const Qd = (f) =>
     lg: { width: 150, height: 46 },
   };
 function xl({ size: f = "md", light: m = !1 }) {
-  const { width: S, height: o } = J1[f];
+  const { width: S, height: o } = J1?.[f] ?? { width: 150, height: 46 };
   const logoSrc = "https://i.ibb.co/GQ39DLcf/photo-2026-06-12-23-52-12.jpg";
-
   return u.jsx("img", {
     src: logoSrc,
     width: S,
     height: o,
     alt: "meeesho logo",
     style: { display: "inline-block", verticalAlign: "middle" },
-  });
-}
-      }),
-    ],
+    onError: (e) => { e.target.onerror = null; e.target.src = "fallback-logo.png"; }
   });
 }
 function W1({ cartCount: f, onCartOpen: m }) {
