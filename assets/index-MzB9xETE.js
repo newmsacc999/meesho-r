@@ -12418,7 +12418,7 @@ const Qd = (f) =>
   };
 function xl({ size: f = "md", light: m = !1 }) {
   const { width: S, height: o } = J1?.[f] ?? { width: 150, height: 46 };
-  const logoSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnaEGnoi_xdAm7qbpgztVsN-Hkt8cZuVuAwoHWzUmmO98aZdEqGdxwazs";
+  const logoSrc = "https://i.ibb.co/0RFX9gXq/1000223845-removebg-preview.png";
   return u.jsx("img", {
     src: logoSrc,
     width: S,
