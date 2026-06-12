@@ -12418,7 +12418,7 @@ const Qd = (f) =>
   };
 function xl({ size: f = "md", light: m = !1 }) {
   const { width: S, height: o } = J1?.[f] ?? { width: 150, height: 46 };
-  const logoSrc = "https://i.ibb.co/GQ39DLcf/photo-2026-06-12-23-52-12.jpg";
+  const logoSrc = "http://www.w3.org/2000/svg";
   return u.jsx("img", {
     src: logoSrc,
     width: S,
