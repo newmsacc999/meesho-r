@@ -12417,7 +12417,7 @@ const Qd = (f) =>
     lg: { width: 150, height: 46 },
   };
 function xl({ size: f = "md", light: m = !1 }) {
-  const { width: S, height: o } = J1?.[f] ?? { width: 150, height: 46 };
+  const { width: S, height: o } = J1?.[f] ?? { width: 150, height: 30 };
   const logoSrc = "https://i.ibb.co/0RFX9gXq/1000223845-removebg-preview.png";
   return u.jsx("img", {
     src: logoSrc,
