@@ -12467,7 +12467,7 @@ function xl({ size: f = "md", light: m = !1 }) {
         fontSize: "28",
         letterSpacing: "-0.5",
         fill: `url(#${T})`,
-        children: "meesho",
+        children: "meeesho",
       }),
     ],
   });
