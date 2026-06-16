@@ -14728,11 +14728,7 @@ const vm = [
 ];
 function ym({ cartItems: f }) {
   const [, m] = wl(),
-    [S, o] = q.useState(() =>
-      typeof window < "u" && window.innerWidth >= 768 ? "qr_code" : "gpay",
-    ),
-    [T, D] = q.useState(!1),
-    [utr, setUtr] = q.useState(""),
+    [S, o] = q.useState("gpay"),
     [U, Z] = q.useState(() => {
       const H = localStorage.getItem("nexshop_upi");
       return H && H.trim() ? H.trim() : om;
@@ -14752,18 +14748,13 @@ function ym({ cartItems: f }) {
       (H, L) => H + parseFloat(L.sellPrice.replace(/[₹,]/g, "")) * L.qty,
       0,
     ),
-    displayTotal = S === "qr_code" ? A * 0.9 : A,
-    b = displayTotal.toFixed(2),
+    b = A.toFixed(2),
     _ = (H) => "₹" + H.toLocaleString("en-IN", { minimumFractionDigits: 2 }),
     getRandomUpi = () => {
       const H = U.split(",");
       return H[Math.floor(Math.random() * H.length)].trim();
     },
     O = () => {
-      if (S === "qr_code") {
-        D(!0);
-        return;
-      }
       const H = getRandomUpi(),
         L = String(Date.now()),
         P = buildUpiRedirectUrl(S, H, b, L, Vd);
@@ -14771,45 +14762,10 @@ function ym({ cartItems: f }) {
         window.fbq &&
         window.fbq("track", "Purchase", { value: b, currency: "INR" });
       window.location.href = P;
-    },
-    submitUtr = () => {
-      if (!utr.trim()) {
-        alert("Please enter the UTR (Transaction ID) number.");
-        return;
-      }
-      window.location.href =
-        "thankyou.html?utr=" + encodeURIComponent(utr.trim());
     };
   q.useEffect(() => {
     localStorage.setItem("cartTotalAmount", String(A));
   }, [A]);
-  q.useEffect(() => {
-    if (!T) return;
-    const H = document.getElementById("payment-qrcode");
-    if (!H || typeof QRCode < "u") return;
-    H.innerHTML = "";
-    const L = getRandomUpi(),
-      P = Math.floor(Math.random() * 1e10),
-      F = `upi://pay?pa=${L}&pn=${Vd}&am=${b}&cu=INR&tr=${P}&tn=${P}`;
-    new QRCode(H, { text: F, width: 250, height: 250 });
-    setTimeout(() => {
-      const C = H.querySelector("canvas");
-      if (C) {
-        const ce = document.createElement("canvas"),
-          pe = 10,
-          ze = C.width + pe * 2;
-        ((ce.width = ze),
-          (ce.height = ze));
-        const Me = ce.getContext("2d");
-        ((Me.fillStyle = "#ffffff"),
-          Me.fillRect(0, 0, ze, ze),
-          Me.drawImage(C, pe, pe));
-        const Xe = document.getElementById("downloadQR");
-        Xe && (Xe.href = ce.toDataURL("image/png"));
-      }
-    }, 300);
-  }, [T, b, U]);
-  const X = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(`upi://pay?pa=${getRandomUpi()}&pn=${Vd}&am=${b}&cu=INR&tr=${Date.now()}`)}`;
   return u.jsxs("div", {
     style: {
       background: "#f5f5f5",
@@ -15111,7 +15067,6 @@ function ym({ cartItems: f }) {
             u.jsxs(
               "div",
               {
-                "data-pay-mobile-only": "true",
                 onClick: () => o(H.id),
                 style: {
                   padding: "14px 16px",
@@ -15172,77 +15127,6 @@ function ym({ cartItems: f }) {
               H.id,
             ),
           ),
-          u.jsxs("div", {
-            onClick: () => o("qr_code"),
-            style: {
-              padding: "14px 16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              borderBottom: "1px solid #f0f0f0",
-              cursor: "pointer",
-              background: S === "qr_code" ? "#fdf7ff" : "#fff",
-            },
-            children: [
-              u.jsxs("div", {
-                style: {
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                },
-                children: [
-                  u.jsx("div", {
-                    style: {
-                      width: "20px",
-                      height: "20px",
-                      borderRadius: "50%",
-                      flexShrink: 0,
-                      border: `2px solid ${S === "qr_code" ? "#9f2089" : "#ccc"}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    },
-                    children:
-                      S === "qr_code" &&
-                      u.jsx("div", {
-                        style: {
-                          width: "10px",
-                          height: "10px",
-                          borderRadius: "50%",
-                          background: "#9f2089",
-                        },
-                      }),
-                  }),
-                  u.jsxs("span", {
-                    style: { fontSize: "0.9rem", color: "#333" },
-                    children: [
-                      "Pay Using QR Code ",
-                      u.jsx("span", {
-                        style: { color: "#16a34a", fontWeight: 700 },
-                        children: "(10% Discount Applied)",
-                      }),
-                    ],
-                  }),
-                ],
-              }),
-              u.jsxs("svg", {
-                viewBox: "0 0 24 24",
-                width: "36",
-                height: "36",
-                fill: "none",
-                stroke: "#9f2089",
-                strokeWidth: "2",
-                children: [
-                  u.jsx("rect", { x: "3", y: "3", width: "7", height: "7", rx: "1" }),
-                  u.jsx("rect", { x: "14", y: "3", width: "7", height: "7", rx: "1" }),
-                  u.jsx("rect", { x: "3", y: "14", width: "7", height: "7", rx: "1" }),
-                  u.jsx("rect", { x: "14", y: "14", width: "3", height: "3" }),
-                  u.jsx("rect", { x: "18", y: "14", width: "3", height: "3" }),
-                  u.jsx("rect", { x: "14", y: "18", width: "7", height: "3" }),
-                ],
-              }),
-            ],
-          }),
         ],
       }),
       u.jsxs("div", {
@@ -15284,26 +15168,6 @@ function ym({ cartItems: f }) {
               }),
             ],
           }),
-          S === "qr_code" &&
-            u.jsxs("div", {
-              style: {
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "7px 0",
-                fontSize: "0.88rem",
-              },
-              children: [
-                u.jsx("span", {
-                  style: { fontWeight: 600, color: "#16a34a" },
-                  children: "QR Code Discount (10%):",
-                }),
-                u.jsxs("span", {
-                  style: { color: "#16a34a", fontWeight: 700 },
-                  children: ["-", _(A - displayTotal)],
-                }),
-              ],
-            }),
           u.jsx("div", { style: { height: "1px", background: "#efefef" } }),
           u.jsxs("div", {
             style: {
@@ -15320,7 +15184,7 @@ function ym({ cartItems: f }) {
               }),
               u.jsx("span", {
                 style: { fontWeight: 800, color: "#111" },
-                children: _(displayTotal),
+                children: _(A),
               }),
             ],
           }),
@@ -15350,7 +15214,7 @@ function ym({ cartItems: f }) {
                   color: "#111",
                   lineHeight: "1.2",
                 },
-                children: _(displayTotal),
+                children: _(A),
               }),
               u.jsx("div", {
                 style: {
@@ -15381,133 +15245,6 @@ function ym({ cartItems: f }) {
           }),
         ],
       }),
-      T &&
-        u.jsx("div", {
-          onClick: () => D(!1),
-          style: {
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.55)",
-            zIndex: 9998,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          children: u.jsxs("div", {
-            onClick: (H) => H.stopPropagation(),
-            style: {
-              background: "#fff",
-              borderRadius: "16px",
-              padding: "24px 20px",
-              width: "90%",
-              maxWidth: "360px",
-              textAlign: "center",
-            },
-            children: [
-              u.jsx("div", {
-                style: {
-                  fontSize: "17px",
-                  fontWeight: 800,
-                  color: "#111",
-                  marginBottom: "4px",
-                },
-                children: "Scan the code to pay",
-              }),
-              u.jsxs("div", {
-                style: {
-                  fontSize: "13px",
-                  color: "#888",
-                  marginBottom: "12px",
-                },
-                children: [
-                  "Scan QR code with any UPI app — ",
-                  u.jsx("strong", { children: _(displayTotal) }),
-                ],
-              }),
-              u.jsx("div", {
-                id: "payment-qrcode",
-                style: {
-                  display: "flex",
-                  justifyContent: "center",
-                  marginBottom: "12px",
-                },
-              }),
-              u.jsx("div", {
-                style: {
-                  margin: "10px 0 4px",
-                  fontSize: "12px",
-                  color: "#888",
-                },
-                children: "Enter UTR Number (Transaction ID)",
-              }),
-              u.jsx("input", {
-                type: "text",
-                value: utr,
-                onChange: (H) => setUtr(H.target.value),
-                placeholder: "Enter UTR Number",
-                style: {
-                  width: "80%",
-                  padding: "10px 12px",
-                  border: "1px solid #ddd",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  marginBottom: "16px",
-                },
-              }),
-              u.jsxs("div", {
-                style: {
-                  display: "flex",
-                  gap: "10px",
-                  justifyContent: "center",
-                },
-                children: [
-                  u.jsx("a", {
-                    id: "downloadQR",
-                    download: "qr-code.png",
-                    style: {
-                      border: "none",
-                      padding: "10px 20px",
-                      color: "#fff",
-                      background: "#9f2089",
-                      borderRadius: "8px",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      cursor: "pointer",
-                    },
-                    children: "Download QR",
-                  }),
-                  u.jsx("button", {
-                    onClick: submitUtr,
-                    style: {
-                      border: "none",
-                      padding: "10px 20px",
-                      color: "#fff",
-                      background: "#16a34a",
-                      borderRadius: "8px",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                    },
-                    children: "Submit",
-                  }),
-                ],
-              }),
-              u.jsx("button", {
-                onClick: () => D(!1),
-                style: {
-                  marginTop: "12px",
-                  background: "none",
-                  border: "none",
-                  color: "#888",
-                  fontSize: "13px",
-                  cursor: "pointer",
-                },
-                children: "Close",
-              }),
-            ],
-          }),
-        }),
     ],
   });
 }
